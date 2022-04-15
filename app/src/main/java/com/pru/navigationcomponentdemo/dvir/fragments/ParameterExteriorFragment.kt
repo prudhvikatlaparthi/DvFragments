@@ -2,6 +2,7 @@ package com.pru.navigationcomponentdemo.dvir.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.pru.navigationcomponentdemo.R
@@ -31,11 +32,10 @@ class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior)
         binding.tabView.addTab(binding.tabView.newTab().apply {
             text = "Tyre"
         })
+        onTabChange(binding.tabView.getTabAt(0))
         binding.tabView.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    binding.selectedTab.text = it.text
-                }
+                onTabChange(tab)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -47,6 +47,23 @@ class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior)
             }
 
         })
+    }
+
+    private fun onTabChange(tab: TabLayout.Tab?) {
+        binding.twoVehicler.twoVehiclerRoot.isVisible = true
+        tab?.let {
+            when (it.text) {
+                "Front" -> {
+                    binding.twoVehicler.frontLayout.dRootView.isVisible = true
+                    binding.twoVehicler.side1Layout.dRootView.isVisible = false
+                }
+                "Side1" -> {
+                    binding.twoVehicler.frontLayout.dRootView.isVisible = false
+                    binding.twoVehicler.side1Layout.dRootView.isVisible = true
+                }
+                else -> {}
+            }
+        }
     }
 }
 
