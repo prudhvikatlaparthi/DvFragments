@@ -7,5 +7,5 @@ data class DVInspectionResponse(
 data class DVirConfigMaster(
     var dvrView: String? = null,
     var dvrParamName: String? = null,
-    var isChecked: Boolean = false
+    var isChecked: Boolean = false,
 )

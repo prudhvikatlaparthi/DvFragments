@@ -3,20 +3,21 @@ package com.pru.navigationcomponentdemo.dvir
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.pru.navigationcomponentdemo.R
 import com.pru.navigationcomponentdemo.databinding.ActivityDviractivityBinding
 import com.pru.navigationcomponentdemo.dvir.adapters.ViewPagerAdapter
 import com.pru.navigationcomponentdemo.dvir.fragments.CapturedImageFragment
 import com.pru.navigationcomponentdemo.dvir.fragments.ParameterExteriorFragment
+import com.pru.navigationcomponentdemo.dvir.fragments.ParameterInteriorFragment
 import com.pru.navigationcomponentdemo.dvir.fragments.SelfInspectionFragment
-import com.pru.navigationcomponentdemo.models.DVIRItem
-import com.pru.navigationcomponentdemo.models.DVInspectionResponse
-import com.pru.navigationcomponentdemo.models.DVirConfigMaster
+import com.pru.navigationcomponentdemo.models.*
 import com.pru.navigationcomponentdemo.utils.Constants
 
 class DVIRActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDviractivityBinding
     private val dataList = mutableListOf<DVIRItem>()
     private val selfInspectionFragment: SelfInspectionFragment by lazy { SelfInspectionFragment() }
+    private val parameterInteriorFragment: ParameterInteriorFragment by lazy { ParameterInteriorFragment() }
     private val capturedImageFragment: CapturedImageFragment by lazy { CapturedImageFragment() }
     private val parameterExteriorFragment: ParameterExteriorFragment by lazy { ParameterExteriorFragment() }
     private val pagerAdapter by lazy {
@@ -25,6 +26,7 @@ class DVIRActivity : AppCompatActivity() {
         )
     }
     private val driverInspectionList = mutableListOf<DVirConfigMaster>()
+    private val interiorInspection = arrayListOf<InteriorItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class DVIRActivity : AppCompatActivity() {
         setContentView(binding.root)
         dataList.add(DVIRItem(selfInspectionFragment))
         dataList.add(DVIRItem(capturedImageFragment))
+        dataList.add(DVIRItem(parameterInteriorFragment))
         dataList.add(DVIRItem(parameterExteriorFragment))
 
         binding.vmPager2.adapter = pagerAdapter
@@ -62,6 +65,64 @@ class DVIRActivity : AppCompatActivity() {
                 }
             }
             selfInspectionFragment.updateView(driverInspectionList)
+        }
+
+        if (response.dvirConfigMasterList?.isNotEmpty() == true) {
+            response.dvirConfigMasterList.forEach {
+                if (it.dvrView == Constants.DVREnum.ParameterInteriorInspection.value) {
+                    val interiorItem = InteriorItem(
+                        itemName = it.dvrParamName ?: "",
+                        itemIcon = getInteriorIcon(it.dvrParamName)
+                    )
+                    interiorInspection.add(interiorItem)
+                }
+            }
+            parameterInteriorFragment.updateView(interiorInspection)
+        }
+
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Engine", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Clutch", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Airliners", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Radiator", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Heater", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Oil Pressure", itemIcon = R.drawable.ic_car
+            )
+        )
+        interiorInspection.add(
+            InteriorItem(
+                itemName = "Steering", itemIcon = R.drawable.ic_car
+            )
+        )
+
+        parameterInteriorFragment.updateView(interiorInspection)
+    }
+
+    private fun getInteriorIcon(dvrParamName: String?): Int {
+        return when(dvrParamName) {
+            "Clutch" -> R.drawable.ic_left
+            else -> R.drawable.ic_car
         }
     }
 }
