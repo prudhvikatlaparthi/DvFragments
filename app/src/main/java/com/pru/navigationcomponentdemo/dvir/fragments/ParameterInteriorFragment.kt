@@ -47,6 +47,5 @@ class ParameterInteriorFragment : Fragment(R.layout.fragment_parameter_interior)
     fun updateView(data: ArrayList<InteriorItem>) {
         interiorItems.clear()
         interiorItems.addAll(data)
-        adapter.notifyDataSetChanged()
     }
 }

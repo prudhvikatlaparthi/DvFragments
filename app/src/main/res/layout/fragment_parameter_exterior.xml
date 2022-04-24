@@ -23,10 +23,12 @@
 
         <include
             android:id="@+id/twoVehicler"
+            android:visibility="gone"
             layout="@layout/two_vehicler_layout" />
 
         <include
             android:id="@+id/fourVehicler"
+            android:visibility="gone"
             layout="@layout/four_vehicler_layout" />
 
 

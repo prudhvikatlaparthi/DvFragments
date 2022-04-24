@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fourVehiclerLayout"
     android:layout_width="match_parent"
-    android:visibility="gone"
     android:layout_height="match_parent">
 
-    <include layout="@layout/front_four_vehicle_layout" />
+    <include
+        android:id="@+id/frontLayout"
+        layout="@layout/front_four_vehicle_layout" />
 
-    <include layout="@layout/side1_four_vehicle_layout" />
+    <include
+        android:id="@+id/side1Layout"
+        android:visibility="gone"
+        layout="@layout/side1_four_vehicle_layout" />
 </FrameLayout>
