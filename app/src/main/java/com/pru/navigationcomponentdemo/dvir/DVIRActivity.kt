@@ -3,8 +3,6 @@ package com.pru.navigationcomponentdemo.dvir
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.pru.navigationcomponentdemo.R
 import com.pru.navigationcomponentdemo.databinding.ActivityDviractivityBinding
 import com.pru.navigationcomponentdemo.dvir.adapters.ViewPagerAdapter
@@ -53,6 +51,11 @@ class DVIRActivity : AppCompatActivity() {
             when (binding.vmPager2.currentItem) {
                 0 -> {
                     selfInspectionFragment.validateView {
+                        binding.vmPager2.setCurrentItem(binding.vmPager2.currentItem + 1, true)
+                    }
+                }
+                1 -> {
+                    capturedImageFragment.validateView {
                         binding.vmPager2.setCurrentItem(binding.vmPager2.currentItem + 1, true)
                     }
                 }
@@ -198,6 +201,8 @@ class DVIRActivity : AppCompatActivity() {
             parameterInteriorFragment.updateView(interiorInspection)
 
             parameterExteriorFragment.updateView(exteriorInspectionList)
+        }else{
+
         }
 
         /*val hashMap = LinkedHashMap<String, ArrayList<ExteriorItem>>()

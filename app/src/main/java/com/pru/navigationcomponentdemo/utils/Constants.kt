@@ -1,6 +1,7 @@
 package com.pru.navigationcomponentdemo.utils
 
 object Constants {
+    const val kErrorMessage = "Something went wrong"
     enum class DVREnum(val value: String) {
         DriverInspection("driver_inspection"),
         ParameterInteriorInspection("internal");

@@ -22,10 +22,11 @@ class SelfInspectionFragment : Fragment(R.layout.fragment_self_inspection) {
     }
 
     fun validateView(moveListener: () -> Unit) {
-        val checkListSize = driverInspectionList.filter { it.isChecked }.size
+        /*val checkListSize = driverInspectionList.filter { it.isChecked }.size
         if (checkListSize != driverInspectionList.size) {
             // TODO: AlertDialog Okay click
             moveListener.invoke()
-        }
+        }*/
+        moveListener.invoke()
     }
 }
