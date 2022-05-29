@@ -13,4 +13,8 @@ object CommonUtils {
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }
+
+    fun Context.getHeight(): Int = resources.displayMetrics.heightPixels
+
+    fun Context.getWidth(): Int = resources.displayMetrics.widthPixels
 }

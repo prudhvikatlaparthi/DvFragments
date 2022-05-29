@@ -8,14 +8,19 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.pru.navigationcomponentdemo.R
 import com.pru.navigationcomponentdemo.databinding.FragmentParameterExteriorBinding
+import com.pru.navigationcomponentdemo.dvir.TyreDialogFragment
 import com.pru.navigationcomponentdemo.models.ExteriorItem
 import com.pru.navigationcomponentdemo.models.ItemCheckValidation
+import com.pru.navigationcomponentdemo.models.TyreItem
 import com.pru.navigationcomponentdemo.utils.Constants
 import com.pru.navigationcomponentdemo.utils.ObjectHolder
 
-class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior) {
+class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior), TyreDialogFragment.Listener {
     private lateinit var binding: FragmentParameterExteriorBinding
     private val exteriorInspectionList = linkedMapOf<String, ArrayList<ExteriorItem>>()
+    private var tyreInspectionList = linkedMapOf<String, TyreItem>()
+    private val tyreDepth = "tyreDepth"
+    private val airPressure = "airPressure"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,6 +45,46 @@ class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior)
             })
         }
         onTabChange(binding.tabView.getTabAt(0))
+        val value1 = TyreItem(
+            idealDepth = 45,
+            currentDepth = 0,
+            isTireRetread = false,
+            idealPressure = 50,
+            currentPressure = 0,
+            pressureComments = "",
+            tyrePosition = "L1F"
+        )
+        val value2 = TyreItem(
+            idealDepth = 45,
+            currentDepth = 0,
+            isTireRetread = false,
+            idealPressure = 50,
+            currentPressure = 0,
+            pressureComments = "",
+            tyrePosition = "R1F"
+        )
+        val value3 = TyreItem(
+            idealDepth = 45,
+            currentDepth = 0,
+            isTireRetread = false,
+            idealPressure = 50,
+            currentPressure = 0,
+            pressureComments = "",
+            tyrePosition = "L2R"
+        )
+        val value4 = TyreItem(
+            idealDepth = 45,
+            currentDepth = 0,
+            isTireRetread = false,
+            idealPressure = 50,
+            currentPressure = 0,
+            pressureComments = "",
+            tyrePosition = "R2R"
+        )
+        tyreInspectionList["1"] = value1
+        tyreInspectionList["2"] = value2
+        tyreInspectionList["3"] = value3
+        tyreInspectionList["4"] = value4
     }
 
     private fun onclickListeners() {
@@ -59,19 +104,40 @@ class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior)
         })
 
         binding.fourVehicler.frontLayout.frontMirror.setOnClickListener {
-            toggleStatus(it, "FRONT MIRROR",Constants.DVREnum.ParameterExteriorInspection.FrontView.title)
+            /*toggleStatus(
+                it,
+                "FRONT MIRROR",
+                Constants.DVREnum.ParameterExteriorInspection.FrontView.title
+            )*/
+            val dialogFragment = TyreDialogFragment("1",tyreInspectionList)
+            dialogFragment.show(
+                requireActivity().supportFragmentManager,
+                TyreDialogFragment::class.simpleName
+            )
         }
 
         binding.fourVehicler.frontLayout.wShieldWiper.setOnClickListener {
-            toggleStatus(it, "WINDSHIELD WIPER",Constants.DVREnum.ParameterExteriorInspection.FrontView.title)
+            toggleStatus(
+                it,
+                "WINDSHIELD WIPER",
+                Constants.DVREnum.ParameterExteriorInspection.FrontView.title
+            )
         }
 
         binding.fourVehicler.side1Layout.sideMirror.setOnClickListener {
-            toggleStatus(it, "SIDE MIRROR",Constants.DVREnum.ParameterExteriorInspection.LeftSideView.title)
+            toggleStatus(
+                it,
+                "SIDE MIRROR",
+                Constants.DVREnum.ParameterExteriorInspection.LeftSideView.title
+            )
         }
 
         binding.fourVehicler.side1Layout.windows.setOnClickListener {
-            toggleStatus(it, "WINDOWS",Constants.DVREnum.ParameterExteriorInspection.LeftSideView.title)
+            toggleStatus(
+                it,
+                "WINDOWS",
+                Constants.DVREnum.ParameterExteriorInspection.LeftSideView.title
+            )
         }
     }
 
@@ -167,6 +233,10 @@ class ParameterExteriorFragment : Fragment(R.layout.fragment_parameter_exterior)
     fun updateView(data: LinkedHashMap<String, ArrayList<ExteriorItem>>) {
         exteriorInspectionList.clear()
         exteriorInspectionList.putAll(data)
+    }
+
+    override fun onTyreDialogSave(tyreInspectionList: LinkedHashMap<String, TyreItem>) {
+        this.tyreInspectionList = tyreInspectionList
     }
 }
 
