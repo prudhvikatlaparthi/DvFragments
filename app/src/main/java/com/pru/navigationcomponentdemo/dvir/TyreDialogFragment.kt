@@ -35,6 +35,7 @@ class TyreDialogFragment(
     override fun onStart() {
         super.onStart()
         val width: Int = (requireContext().getWidth() * 0.96).toInt()
+//        val height: Int = (requireContext().getHeight() * 0.7).toInt()
         val height: Int = (requireContext().getHeight() * 0.7).toInt()
 
         requireDialog().window?.setLayout(width, height)
